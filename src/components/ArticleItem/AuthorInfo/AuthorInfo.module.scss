@@ -1,0 +1,22 @@
+.user_info {
+  display: flex;
+}
+
+.info {
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.name_user {
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}

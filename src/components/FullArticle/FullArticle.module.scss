@@ -1,0 +1,54 @@
+.article_wrapper {
+  max-width: 938px;
+  padding: 16px;
+  margin: 26px auto auto auto;
+  background-color: #fff;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.article_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link_title {
+  margin-right: 13px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.like_btn {
+  padding: 0;
+  margin-right: 5px;
+}
+
+.list_tags {
+  display: flex;
+}
+
+.tagItem {
+  display: inline;
+  margin-right: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 2px 5px;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.markdown_block {
+  margin-top: 25px;
+}
+
+.link_back {
+  display: inline-block;
+  margin-top: 25px;
+  font-size: 18px;
+}
