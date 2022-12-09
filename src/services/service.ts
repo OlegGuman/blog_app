@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { IArticle } from './../interface'
+import { IArticle, IUser, INewUser } from './../interface'
 
 const ARTICLES_PER_PAGE = 5
 
@@ -21,7 +21,61 @@ export const api = createApi({
         url: `/articles/${idPage.idPage}`,
       }),
     }),
+    registerUser: builder.mutation<{ user: INewUser }, { username: string; email: string; password: string }>({
+      query: (body) => ({
+        url: '/users',
+        method: 'POST',
+        body: {
+          user: body,
+        },
+        headers: {
+          Authorization: 'Bearer',
+        },
+      }),
+    }),
+    getUser: builder.mutation<{ user: IUser }, string>({
+      query: (token) => ({
+        url: '/user',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    editUser: builder.mutation<
+      { user: IUser },
+      { username: string; email: string; password: string; image: string; token: string }
+    >({
+      query: ({ token, ...data }) => ({
+        url: '/user',
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          user: data,
+        },
+      }),
+    }),
+    loginUser: builder.mutation<{ user: IUser }, { email: string; password: string }>({
+      query: (user) => ({
+        url: '/users/login',
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer',
+        },
+        body: {
+          user: user,
+        },
+      }),
+    }),
   }),
 })
 
-export const { useGetArticlesQuery, useGetFullArticleQuery } = api
+export const {
+  useGetArticlesQuery,
+  useGetFullArticleQuery,
+  useRegisterUserMutation,
+  useGetUserMutation,
+  useEditUserMutation,
+  useLoginUserMutation,
+} = api

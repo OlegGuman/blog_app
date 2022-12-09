@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom'
 
 import { AuthorInfo } from '../router'
 import { IArticle } from '../../interface'
+import { generateId, correctTag, correctText } from '../../utility/utility'
 import likeIcon from '../../images/like_icon.svg'
 
 import styles from './ArticleItem.module.scss'
 interface IArticleItemProps {
   data: IArticle
-}
-
-function generateId() {
-  return Math.random().toString(16).slice(2) + new Date().getTime().toString(36)
 }
 
 const ArticleItem: FC<IArticleItemProps> = ({
@@ -24,7 +21,7 @@ const ArticleItem: FC<IArticleItemProps> = ({
     }
     return (
       <li key={generateId()} className={styles.tagItem}>
-        {tag}
+        {correctTag(tag)}
       </li>
     )
   })
@@ -33,7 +30,7 @@ const ArticleItem: FC<IArticleItemProps> = ({
       <div className={styles.item_header}>
         <div className={styles.left}>
           <Link className={styles.link_title} to={`/articles/${slug}`}>
-            {title}
+            {correctText(title, 5)}
           </Link>
           <div className={styles.like_info}>
             <Button className={styles.like_btn} type="text">
@@ -46,7 +43,7 @@ const ArticleItem: FC<IArticleItemProps> = ({
         <AuthorInfo author={author} createdAt={createdAt} />
       </div>
       <ul className={styles.list_tags}>{tagListItem}</ul>
-      <p>{description}</p>
+      <p className={styles.description}>{correctText(description, 52)}</p>
     </div>
   )
 }

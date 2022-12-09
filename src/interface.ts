@@ -22,3 +22,17 @@ export interface IAuthor {
   image: string
   following?: boolean
 }
+
+export interface IUser {
+  email: string
+  token: string
+  username: string
+  bio?: string
+  image?: string
+}
+
+export interface INewUser {
+  email: string
+  username: string
+  token: string
+}

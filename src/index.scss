@@ -1,4 +1,3 @@
-//@import url(antd/dist/antd.min.css);
 @import url(./components/App/App.module.scss);
 @import url(./main.global.scss);
 @import url(./components/Header/Header.module.scss);
@@ -6,6 +5,6 @@
 @import url(./components/ArticleListPage/ArticleListPage.module.scss);
 @import url(./components/ArticleItem/ArticleItem.module.scss);
 @import url(./components/ArticleItem/AuthorInfo/AuthorInfo.module.scss);
-// @import url(./components/FilterPanel/filterPanel.module.scss);
-// @import url(./components/CheckBox/checkbox.module.scss);
-// @import url(./components/FooterButton/footerButton.module.scss);
+@import url(./components/SignUpPage/SignUpPage.module.scss);
+@import url(./components/SignInPage/SignInPage.module.scss);
+@import url(./components/EditProfilePage/EditProfilePage.module.scss);

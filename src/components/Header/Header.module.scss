@@ -21,6 +21,41 @@
   align-items: center;
 }
 
+.header_buttonGroup {
+  display: flex;
+  align-items: center;
+}
+
+.createArticleBtn {
+  max-height: 31px;
+  margin-right: 26px;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #52c41a;
+  border: 1px solid #52c41a;
+  border-radius: 5px;
+}
+
+.userPrev {
+  margin-right: 27px;
+  display: flex;
+  align-items: center;
+}
+
+.userName {
+  margin-right: 13px;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.userAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
 .signInBtn {
   padding: 10px 20px;
   height: auto;
@@ -59,4 +94,17 @@
 
 .signUpBtn:hover span {
   color: #3b9908;
+}
+
+.logOutBtn {
+  padding: 10px 20px;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.85);
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.85);
+  transition: all 0.2s ease-in-out;
+}
+
+.logOutBtn:hover {
+  border: 1px solid #1890ff;
 }

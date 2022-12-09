@@ -45,8 +45,9 @@ const ArticleList = () => {
           <Pagination
             className={styles.pagination_custom}
             defaultCurrent={1}
-            total={50}
+            total={data?.articlesCount}
             onChange={(current) => handlerPage(current)}
+            showSizeChanger={false}
           />
         )}
       </footer>

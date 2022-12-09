@@ -1,6 +1,6 @@
 import { Alert, Button, Spin } from 'antd'
 import ReactMarkdown from 'react-markdown'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { AuthorInfo } from '../router'
 import { useGetFullArticleQuery } from '../../services/service'
@@ -71,9 +71,6 @@ const FullArticle = () => {
             <ul className={styles.list_tags}>{tagListItem}</ul>
             <p>{data?.article.description}</p>
             {markdownData}
-            <Link className={styles.link_back} to="/articles">
-              {'<< Back'}
-            </Link>
           </div>
         </article>
       </section>

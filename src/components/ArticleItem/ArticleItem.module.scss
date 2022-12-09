@@ -16,10 +16,13 @@
 }
 
 .link_title {
+  max-width: 80%;
   margin-right: 13px;
   padding: 0;
   font-size: 20px;
   line-height: 28px;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .like_btn {
@@ -28,6 +31,7 @@
 }
 
 .list_tags {
+  margin-top: 10px;
   display: flex;
 }
 
@@ -39,4 +43,10 @@
   padding: 2px 5px;
   font-size: 12px;
   line-height: 14px;
+}
+
+.description {
+  max-width: 80%;
+  overflow: hidden;
+  word-break: break-all;
 }
