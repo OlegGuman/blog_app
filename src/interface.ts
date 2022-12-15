@@ -13,6 +13,7 @@ export interface IArticle {
     bio: string
     image: string
     following: boolean
+    slug?: string
   }
 }
 
@@ -21,4 +22,18 @@ export interface IAuthor {
   bio?: string
   image: string
   following?: boolean
+}
+
+export interface IUser {
+  email: string
+  token: string
+  username: string
+  bio?: string
+  image?: string
+}
+
+export interface INewUser {
+  email: string
+  username: string
+  token: string
 }

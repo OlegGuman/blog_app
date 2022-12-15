@@ -1,43 +1,65 @@
 import { Button } from 'antd'
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import classes from 'classnames'
 
+import { useAppSelector } from '../../hooks/hook'
+import { useAddToFavoriteMutation, useDeleteFromFavoriteMutation, useGetArticlesQuery } from '../../services/service'
 import { AuthorInfo } from '../router'
 import { IArticle } from '../../interface'
-import likeIcon from '../../images/like_icon.svg'
+import { generateId, correctTag, correctText } from '../../utility/utility'
 
 import styles from './ArticleItem.module.scss'
 interface IArticleItemProps {
   data: IArticle
 }
 
-function generateId() {
-  return Math.random().toString(16).slice(2) + new Date().getTime().toString(36)
-}
-
 const ArticleItem: FC<IArticleItemProps> = ({
-  data: { slug, title, author, createdAt, favoritesCount, tagList, description },
+  data: { slug, title, author, createdAt, favorited, favoritesCount, tagList, description },
 }) => {
+  const user = useAppSelector((state) => state.user.user)
+  const token = localStorage.getItem('token') || ''
+  const [deleteFromFavorite] = useDeleteFromFavoriteMutation()
+  const [addToFavorite] = useAddToFavoriteMutation()
+  const { page } = useParams<{ page?: string }>()
+  const { refetch } = useGetArticlesQuery({ page: Number(page) || 1, token })
+
   const tagListItem = tagList.map((tag) => {
     if (tag === '' || tag === null) {
       return
     }
     return (
       <li key={generateId()} className={styles.tagItem}>
-        {tag}
+        {correctTag(tag)}
       </li>
     )
   })
+  const favoritesHandler = async (token: string, slug: string) => {
+    if (favorited) {
+      await deleteFromFavorite({ token, slug })
+      refetch()
+    }
+    if (!favorited) {
+      await addToFavorite({ token, slug })
+      refetch()
+    }
+  }
+
   return (
     <div className={styles.item}>
       <div className={styles.item_header}>
         <div className={styles.left}>
           <Link className={styles.link_title} to={`/articles/${slug}`}>
-            {title}
+            {correctText(title, 10)}
           </Link>
           <div className={styles.like_info}>
-            <Button className={styles.like_btn} type="text">
-              <img src={likeIcon} alt="like icon" />
+            <Button
+              onClick={() => favoritesHandler(token, slug)}
+              className={classes(styles.like_btn, !user ? styles.disabled : null)}
+              type="text"
+            >
+              {/* <img src={likeIcon} alt="like icon" /> */}
+              <span className={classes(styles.hardIcon && favorited ? styles.likeIcon : styles.hardIcon)}></span>
             </Button>
             <span className={styles.like_count}>{favoritesCount}</span>
           </div>
@@ -46,7 +68,7 @@ const ArticleItem: FC<IArticleItemProps> = ({
         <AuthorInfo author={author} createdAt={createdAt} />
       </div>
       <ul className={styles.list_tags}>{tagListItem}</ul>
-      <p>{description}</p>
+      <p className={styles.description}>{correctText(description, 52)}</p>
     </div>
   )
 }

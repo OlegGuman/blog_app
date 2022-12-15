@@ -1,10 +1,19 @@
-import { Alert, Button, Spin } from 'antd'
+import { Alert, Button, Spin, Modal } from 'antd'
 import ReactMarkdown from 'react-markdown'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
+import { ExclamationCircleFilled } from '@ant-design/icons'
+import classes from 'classnames'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/hook'
+import { generateId, correctTag, correctText } from '../../utility/utility'
 import { AuthorInfo } from '../router'
-import { useGetFullArticleQuery } from '../../services/service'
-import likeIcon from '../../images/like_icon.svg'
+import {
+  useGetFullArticleQuery,
+  useDeleteArticleMutation,
+  util,
+  useAddToFavoriteMutation,
+  useDeleteFromFavoriteMutation,
+} from '../../services/service'
 
 import styles from './FullArticle.module.scss'
 
@@ -12,14 +21,22 @@ type IParamId = {
   id: string
 }
 
-function generateId() {
-  return Math.random().toString(16).slice(2) + new Date().getTime().toString(36)
+type ISlugParam = {
+  slug: string
+  token: string
 }
 
 const FullArticle = () => {
+  const history = useHistory()
+  const [deleteArticle] = useDeleteArticleMutation()
+  const [addToFavorite] = useAddToFavoriteMutation()
+  const [deleteFromFavorite] = useDeleteFromFavoriteMutation()
+  const dispatch = useAppDispatch()
+  const { confirm } = Modal
+  const user = useAppSelector((state) => state.user.user)
+  const token = localStorage.getItem('token') || ''
   const { id }: IParamId = useParams()
-
-  const { data, isError, isLoading } = useGetFullArticleQuery({ idPage: id })
+  const { data, isError, isLoading, refetch } = useGetFullArticleQuery({ idPage: id, token })
 
   const tagListItem = data?.article.tagList.map((tag) => {
     if (tag === '' || tag === null) {
@@ -27,10 +44,51 @@ const FullArticle = () => {
     }
     return (
       <li key={generateId()} className={styles.tagItem}>
-        {tag}
+        {correctTag(tag)}
       </li>
     )
   })
+
+  const favoritesHandler = async (token: string, slug: string) => {
+    console.log(token)
+    console.log(slug)
+    console.log(data)
+    if (data?.article.favorited) {
+      await deleteFromFavorite({ token, slug })
+      refetch()
+    }
+    if (!data?.article.favorited) {
+      await addToFavorite({ token, slug })
+      refetch()
+    }
+  }
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure to delete this article?',
+      icon: <ExclamationCircleFilled />,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      mask: false,
+      onOk() {
+        articleDelete()
+      },
+      onCancel() {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+      },
+    })
+  }
+
+  const articleDelete = async () => {
+    const articleInfo: ISlugParam = {
+      slug: data?.article.slug || '',
+      token: token,
+    }
+    await deleteArticle(articleInfo).unwrap()
+    dispatch(util.resetApiState())
+    history.push('/articles')
+  }
 
   const authorData = data?.article.author ? (
     <AuthorInfo author={data?.article.author} createdAt={data.article.createdAt} />
@@ -56,12 +114,18 @@ const FullArticle = () => {
             )}
             <div className={styles.article_header}>
               <div className={styles.header_left}>
+                <h2 className={styles.title}> {correctText(data?.article.title || '', 10)}</h2>
                 <div className={styles.like_info}>
-                  <Button className={styles.link_title} type="link">
-                    {data?.article.title}
-                  </Button>
-                  <Button className={styles.like_btn} type="text">
-                    <img src={likeIcon} alt="like icon" />
+                  <Button
+                    onClick={() => favoritesHandler(token, id)}
+                    className={classes(styles.like_btn, !user ? styles.disabled : null)}
+                    type="text"
+                  >
+                    <span
+                      className={classes(
+                        styles.hardIcon && data?.article.favorited ? styles.likeIcon : styles.hardIcon
+                      )}
+                    ></span>
                   </Button>
                   <span className={styles.like_count}>{data?.article.favoritesCount}</span>
                 </div>
@@ -69,11 +133,21 @@ const FullArticle = () => {
               {authorData}
             </div>
             <ul className={styles.list_tags}>{tagListItem}</ul>
-            <p>{data?.article.description}</p>
+            <div className={styles.descriptionWrapper}>
+              <p>{correctText(data?.article.description || '', 10)}</p>
+              {data?.article.author.username === user?.username && !isLoading && (
+                <div className={styles.btnGroup}>
+                  <Button onClick={() => showDeleteConfirm()} className={styles.delBtn}>
+                    Delete
+                  </Button>
+                  <Link to={`/articles/${id}/edit`} className={styles.editBtn}>
+                    Edit
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {markdownData}
-            <Link className={styles.link_back} to="/articles">
-              {'<< Back'}
-            </Link>
           </div>
         </article>
       </section>
