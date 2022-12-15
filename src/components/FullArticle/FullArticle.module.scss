@@ -11,20 +11,57 @@
   justify-content: space-between;
 }
 
-.link_title {
+.header_left {
+  display: flex;
+}
+
+.title {
   margin-right: 13px;
   padding: 0;
   font-size: 20px;
   line-height: 28px;
+  color: #1890ff;
+}
+
+.like_info {
+  padding-top: 5px;
+  display: flex;
 }
 
 .like_btn {
+  height: 16px;
   padding: 0;
   margin-right: 5px;
+  display: flex;
+}
+
+.like_info span {
+  height: 16px;
+}
+
+.hardIcon {
+  background: url(../../images/hardFavorite.svg) no-repeat;
+  width: 16px;
+  height: 16px;
+}
+
+.likeIcon {
+  background: url(../../images/likeFavorite.svg) no-repeat;
+  width: 16px;
+  height: 16px;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.iconFavorite {
+  fill: #f5222d;
 }
 
 .list_tags {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tagItem {
@@ -43,12 +80,96 @@
   border-radius: 50%;
 }
 
+.descriptionWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.descriptionWrapper p {
+  max-width: 75%;
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.btnGroup {
+  display: flex;
+  max-height: 32px;
+}
+
+.delBtn {
+  padding: 6px 17px;
+  height: 32px;
+  margin-right: 12px;
+  border: 1px solid #f5222d;
+  border-radius: 4px;
+  color: #f5222d;
+}
+
+.editBtn {
+  padding: 6px 17px;
+  font-size: 14px;
+  line-height: 21px;
+  border: 1px solid #52c41a;
+  border-radius: 4px;
+  color: #52c41a;
+}
+
+.editBtn:hover {
+  border-color: #1890ff;
+}
+
 .markdown_block {
   margin-top: 25px;
 }
 
-.link_back {
-  display: inline-block;
-  margin-top: 25px;
-  font-size: 18px;
+.markdown_block p {
+  word-break: break-all;
+}
+
+.ant-modal {
+  max-width: 240px;
+}
+
+.ant-modal-confirm .ant-modal-body {
+  padding: 12px 16px;
+}
+
+.ant-modal-confirm-body > .anticon {
+  margin-right: 8px;
+}
+
+.ant-modal-confirm-body .ant-modal-confirm-title {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.ant-btn-dangerous {
+  background-color: #1890ff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.ant-btn-dangerous:focus,
+.ant-btn-dangerous:hover {
+  background-color: #6cb5fa;
+  color: #fff;
+}
+
+.ant-btn-default {
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .article_wrapper {
+    max-width: 768px;
+  }
+
+  .title {
+    word-break: break-all;
+  }
+
+  .like_info {
+    margin-right: 20px;
+  }
 }

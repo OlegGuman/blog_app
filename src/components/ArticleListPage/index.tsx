@@ -1,5 +1,5 @@
 import { Pagination, Spin, Alert } from 'antd'
-import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 
 import { useGetArticlesQuery } from '../../services/service'
 import { ArticleItem } from '../router'
@@ -7,11 +7,12 @@ import { ArticleItem } from '../router'
 import styles from './ArticleListPage.module.scss'
 
 const ArticleList = () => {
-  const [page, setPage] = useState(1)
-  const { data, isLoading, isError } = useGetArticlesQuery({ page: page })
-
+  const token = localStorage.getItem('token') || ''
+  const history = useHistory()
+  const { page } = useParams<{ page?: string }>()
+  const { data, isLoading, isError } = useGetArticlesQuery({ page: Number(page) || 1, token })
   const handlerPage = (current: number) => {
-    setPage(current)
+    history.push(location.pathname.replace(/[^/]*$/, String(current)))
   }
 
   return (
@@ -44,7 +45,7 @@ const ArticleList = () => {
         {!isLoading && !isError && (
           <Pagination
             className={styles.pagination_custom}
-            defaultCurrent={1}
+            current={Number(page) || 1}
             total={data?.articlesCount}
             onChange={(current) => handlerPage(current)}
             showSizeChanger={false}

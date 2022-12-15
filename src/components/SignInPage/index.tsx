@@ -31,7 +31,7 @@ const SignInPage = () => {
       const res = await loginUser(user).unwrap()
       dispatch(setUser(res.user))
       localStorage.setItem('token', res.user.token)
-      history.push('/')
+      history.push('/articles')
     } catch (error) {
       if (isWrongDataError(error)) {
         setError('email', {

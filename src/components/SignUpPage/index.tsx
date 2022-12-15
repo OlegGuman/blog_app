@@ -45,8 +45,7 @@ const SignUpPage = () => {
       const res = await registerUser(user).unwrap()
       dispatch(setUser(res.user))
       localStorage.setItem('token', res.user.token)
-
-      history.push('/')
+      history.push('/articles')
     } catch (error) {
       if (isWrongDataError(error)) {
         if (error.data.errors.username) {

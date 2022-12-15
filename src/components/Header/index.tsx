@@ -1,5 +1,5 @@
 //import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Image } from 'antd'
 
@@ -11,6 +11,7 @@ import { logOut, setUser } from '../../store/slices/userSlice'
 import styles from './Header.module.scss'
 
 const Header = () => {
+  const history = useHistory()
   const [getUser, { isLoading }] = useGetUserMutation()
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.user.user)
@@ -29,6 +30,7 @@ const Header = () => {
   const handlerLogOut = () => {
     localStorage.removeItem('token')
     dispatch(logOut())
+    history.push('/articles')
   }
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const Header = () => {
         {!isLoading && (
           <div className={styles.header_buttonGroup}>
             {user && (
-              <Link className={styles.createArticleBtn} to="">
+              <Link className={styles.createArticleBtn} to="/new-article">
                 Create article
               </Link>
             )}

@@ -6,6 +6,7 @@ const ARTICLES_PER_PAGE = 5
 
 export const api = createApi({
   reducerPath: 'api',
+  tagTypes: ['Articles', 'Favorite'],
   baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api' }),
   endpoints: (builder) => ({
     getArticles: builder.query<{ articles: IArticle[]; articlesCount: number }, { page: number; token?: string }>({
@@ -16,9 +17,12 @@ export const api = createApi({
         },
       }),
     }),
-    getFullArticle: builder.query<{ article: IArticle }, { idPage: string }>({
+    getFullArticle: builder.query<{ article: IArticle }, { idPage: string; token: string }>({
       query: (idPage) => ({
         url: `/articles/${idPage.idPage}`,
+        headers: {
+          Authorization: `Bearer ${idPage.token}`,
+        },
       }),
     }),
     registerUser: builder.mutation<{ user: INewUser }, { username: string; email: string; password: string }>({
@@ -68,6 +72,65 @@ export const api = createApi({
         },
       }),
     }),
+    addArticle: builder.mutation<
+      { article: IArticle },
+      { title: string; description: string; body: string; tagList: string[]; token: string }
+    >({
+      query: (article) => ({
+        url: '/articles',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${article.token}`,
+        },
+        body: {
+          article: article,
+        },
+      }),
+    }),
+    editArticle: builder.mutation<
+      { article: IArticle },
+      { slug: string; title: string; description: string; body: string; tagList: string[]; token: string }
+    >({
+      query: (article) => ({
+        url: `/articles/${article.slug}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${article.token}`,
+        },
+        body: {
+          article: article,
+        },
+      }),
+    }),
+    deleteArticle: builder.mutation<{ article: IArticle }, { slug: string; token: string }>({
+      query: (article) => ({
+        url: `/articles/${article.slug}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${article.token}`,
+        },
+      }),
+    }),
+    addToFavorite: builder.mutation<{ article: IArticle }, { token: string; slug: string }>({
+      query: (article) => ({
+        url: `/articles/${article.slug}/favorite`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${article.token}`,
+        },
+      }),
+      invalidatesTags: ['Favorite'],
+    }),
+    deleteFromFavorite: builder.mutation<{ article: IArticle }, { token: string; slug: string }>({
+      query: (article) => ({
+        url: `/articles/${article.slug}/favorite`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${article.token}`,
+        },
+      }),
+      invalidatesTags: ['Articles'],
+    }),
   }),
 })
 
@@ -78,4 +141,10 @@ export const {
   useGetUserMutation,
   useEditUserMutation,
   useLoginUserMutation,
+  useAddArticleMutation,
+  useEditArticleMutation,
+  useDeleteArticleMutation,
+  useAddToFavoriteMutation,
+  useDeleteFromFavoriteMutation,
+  util,
 } = api

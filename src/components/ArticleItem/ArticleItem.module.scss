@@ -25,14 +25,44 @@
   word-break: break-all;
 }
 
+.like_info {
+  padding-top: 5px;
+  display: flex;
+}
+
 .like_btn {
+  height: 16px;
   padding: 0;
   margin-right: 5px;
+  display: flex;
+}
+
+.like_info span {
+  height: 16px;
+}
+
+.hardIcon {
+  background: url(../../images/hardFavorite.svg) no-repeat;
+  //background-size: cover;
+  width: 16px;
+  height: 16px;
+}
+
+.likeIcon {
+  background: url(../../images/likeFavorite.svg) no-repeat;
+  //background-size: cover;
+  width: 16px;
+  height: 16px;
+}
+
+.disabled {
+  pointer-events: none;
 }
 
 .list_tags {
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tagItem {

@@ -16,21 +16,28 @@ type Inputs = {
 }
 
 const EditProfilePage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>()
   const [editUser] = useEditUserMutation()
   const history = useHistory()
   const dispatch = useAppDispatch()
   const token = useAppSelector((state) => state.user.user?.token || '')
+  const user = useAppSelector((state) => state.user.user)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: user?.email,
+      username: user?.username,
+    },
+  })
 
   async function asyncEditUser({ username, email, password, imageUrl }: Inputs) {
     try {
       const res = await editUser({ username, email, password, image: imageUrl, token }).unwrap()
       dispatch(setUser(res.user))
-      history.push('/')
+      history.push('/articles')
     } catch (error) {
       console.error(error)
     }
@@ -44,7 +51,6 @@ const EditProfilePage = () => {
           <form
             className={styles.form_block}
             onSubmit={handleSubmit((data) => {
-              console.log(data)
               asyncEditUser(data)
             })}
           >
@@ -106,7 +112,7 @@ const EditProfilePage = () => {
               <input
                 className={classes(styles.form_input, errors.imageUrl && styles.error)}
                 {...register('imageUrl', {
-                  required: 'Обязательно для заполнения!',
+                  // required: 'Обязательно для заполнения!',
                   pattern: {
                     // eslint-disable-next-line no-useless-escape
                     value: /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.\/\_\?\=\%\&]+(jpg|png|gif|bmp|jpeg)$/,

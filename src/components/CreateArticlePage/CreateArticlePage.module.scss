@@ -1,0 +1,139 @@
+.createArticleWrapper {
+  max-width: 938px;
+  padding: 48px 32px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  margin: 34px auto 0 auto;
+  background-color: #fff;
+  border-radius: 6px;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.title {
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #262626;
+}
+
+.createArticleForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.articleFormLabel {
+  margin-bottom: 2px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 22px;
+  color: #262626;
+}
+
+.articleFormInput {
+  margin-bottom: 21px;
+  padding: 7px 12px;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  outline: none;
+}
+
+.articleFormInput:focus {
+  outline: 1px solid #1890ff;
+}
+
+.textarea {
+  height: 168px;
+  resize: none;
+  overflow: auto;
+}
+
+.error_message {
+  text-align: left;
+  font-size: 14px;
+  line-height: 22px;
+  color: #f5222d;
+}
+
+.error:focus {
+  outline: 1px solid #f5222d;
+}
+
+.error {
+  margin-bottom: 0;
+  outline: 1px solid #f5222d;
+}
+
+.tag {
+  margin: 0 17px 0 0;
+  width: 300px;
+}
+
+.articleFormBtn {
+  max-width: 319px;
+  padding: 8px 10px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  background-color: #1890ff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.tagsList {
+  margin-bottom: 21px;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.tagsItem {
+  margin-bottom: 5px;
+  display: inline;
+}
+
+.deleteBtn {
+  width: 120px;
+  margin-right: 17px;
+  padding: 7px 16px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #f5222d;
+  background-color: #fff;
+  border: 1px solid #f5222d;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.addBtn {
+  padding: 7px 16px;
+  width: 136px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #117fe6;
+  background-color: #fff;
+  border: 1px solid #117fe6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.deleteBtn:hover {
+  color: #dd686e;
+  border-color: #dd686e;
+}
+
+.addBtn:hover {
+  color: #5c8fc0;
+  border-color: #5c8fc0;
+}
+
+.articleFormBtn:hover {
+  background-color: #117fe6;
+}

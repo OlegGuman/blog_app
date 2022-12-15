@@ -103,8 +103,43 @@
   border-radius: 5px;
   color: rgba(0, 0, 0, 0.85);
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .logOutBtn:hover {
   border: 1px solid #1890ff;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 10px;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .header_buttonGroup {
+    justify-content: space-between;
+  }
+
+  .userPrev {
+    margin-right: 10px;
+  }
+
+  .createArticleBtn {
+    margin-right: 10px;
+    white-space: nowrap;
+  }
+
+  .logOutBtn {
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
 }
