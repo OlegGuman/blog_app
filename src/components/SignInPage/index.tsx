@@ -99,7 +99,7 @@ const SignInPage = () => {
           </form>
           <div className={styles.form_footer}>
             <span>
-              Don’t have an account? <Link to="/sign-in">Sign In.</Link>
+              Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
             </span>
           </div>
         </div>

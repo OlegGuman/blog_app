@@ -58,7 +58,6 @@ const ArticleItem: FC<IArticleItemProps> = ({
               className={classes(styles.like_btn, !user ? styles.disabled : null)}
               type="text"
             >
-              {/* <img src={likeIcon} alt="like icon" /> */}
               <span className={classes(styles.hardIcon && favorited ? styles.likeIcon : styles.hardIcon)}></span>
             </Button>
             <span className={styles.like_count}>{favoritesCount}</span>

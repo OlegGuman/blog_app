@@ -10,7 +10,6 @@ import EditProfilePage from './EditProfilePage'
 import CreateArticlePage from './CreateArticlePage'
 import PrivateRoute from './PrivateRoute'
 import EditArticlePage from './EditArticlePage'
-import IconLike from './IconLike'
 
 export {
   App,
@@ -25,5 +24,4 @@ export {
   CreateArticlePage,
   PrivateRoute,
   EditArticlePage,
-  IconLike,
 }

@@ -50,9 +50,6 @@ const FullArticle = () => {
   })
 
   const favoritesHandler = async (token: string, slug: string) => {
-    console.log(token)
-    console.log(slug)
-    console.log(data)
     if (data?.article.favorited) {
       await deleteFromFavorite({ token, slug })
       refetch()
